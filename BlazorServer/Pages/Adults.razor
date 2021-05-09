@@ -87,9 +87,10 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        
+        Console.WriteLine("OnInitializedAsync...");
         adultsList = await Adapter.GetAdultsAsync();
         AdultsToShow = adultsList;
+        StateHasChanged();
     }
 
     private void FilterByName(ChangeEventArgs changeEventArgs)

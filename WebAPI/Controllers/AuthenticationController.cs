@@ -10,11 +10,11 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class AuthenticationController : Controller
     {
-        private IUserService UserService;
+        private IUserRepo userRepo;
 
-        public AuthenticationController(IUserService userService)
+        public AuthenticationController(IUserRepo userRepo)
         {
-            UserService = userService;
+            this.userRepo = userRepo;
         }
         
         [HttpGet]
@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
             }
             try
             {
-                var account = await UserService.ValidateUserAsync(username, password);
+                var account = await userRepo.ValidateUserAsync(username, password);
                 return Ok(account);
             }
             catch (Exception e)

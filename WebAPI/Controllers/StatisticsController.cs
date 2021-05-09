@@ -9,9 +9,9 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class StatisticsController : Controller
     {
-        private IStatisticsModel StatisticsModel;
+        private IStatisticsRepo StatisticsModel;
 
-        public StatisticsController(IStatisticsModel statisticsModel)
+        public StatisticsController(IStatisticsRepo statisticsModel)
         {
             StatisticsModel = statisticsModel;
         }

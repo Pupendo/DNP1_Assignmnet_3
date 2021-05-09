@@ -11,11 +11,11 @@ namespace WebAPI.Controllers
     [Route("[controller]")]
     public class AdultsController : ControllerBase
     {
-        private IFileAdapter FileAdapter;
+        private IAdultRepo adultRepo;
 
-        public AdultsController(IFileAdapter fileAdapter)
+        public AdultsController(IAdultRepo adultRepo)
         {
-            FileAdapter = fileAdapter;
+            this.adultRepo = adultRepo;
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
             }
             try
             {
-                IList<Adult> adults = await FileAdapter.GetAdultsAsync();
+                IList<Adult> adults = await adultRepo.GetAdultsAsync();
                 return Ok(adults);
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             }
             try
             {
-                Adult adult = await FileAdapter.GetAdultAsync(id);
+                Adult adult = await adultRepo.GetAdultAsync(id);
                 if (adult == null)
                     return NotFound();
                 return Ok(adult);
@@ -68,7 +68,7 @@ namespace WebAPI.Controllers
             }
             try
             {
-                Adult added = await FileAdapter.AddAdultAsync(adult);
+                Adult added = await adultRepo.AddAdultAsync(adult);
                 return Created($"/{added.Id}", added);
             }
             catch (Exception e)
@@ -88,7 +88,7 @@ namespace WebAPI.Controllers
             }
             try
             {
-                await FileAdapter.RemoveAdultAsync(id);
+                await adultRepo.RemoveAdultAsync(id);
                 return Ok();
             }
             catch (Exception e)
@@ -108,7 +108,7 @@ namespace WebAPI.Controllers
 
             try
             {
-                Adult update = await FileAdapter.UpdateAsync(adult);
+                Adult update = await adultRepo.UpdateAsync(adult);
                 return Ok(update);
             }
             catch (Exception e)
